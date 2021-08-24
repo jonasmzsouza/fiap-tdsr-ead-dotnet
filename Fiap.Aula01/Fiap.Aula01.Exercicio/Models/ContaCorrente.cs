@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fiap.Aula01.Exercicio.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,9 +7,41 @@ namespace Fiap.Aula01.Exercicio.Models
 {
     class ContaCorrente : Conta
     {
-        public TipoConta Tipo { get; set; }
         public decimal Limite { get; set; }
+        public TipoConta Tipo { get; set; }
 
+        public override string ToString()
+        {
+            return base.ToString() + $" Limite: {Limite}, Tipo: {Tipo}";
+        }
+
+        public ContaCorrente(int agencia, int numero, IList<Cliente> clientes, TipoConta tipo) : base (agencia, numero, clientes)
+        {
+            Tipo = tipo;
+            switch (Tipo)
+            {
+                case TipoConta.Comum:
+                    Limite = 0;
+                    break;
+                case TipoConta.Especial:
+                    Limite = 500;
+                    break;
+                case TipoConta.Premium:
+                    Limite = 1000;
+                    break;
+            }
+            //Ternário
+            //Limite = Tipo == TipoConta.Especial ? 500 : Tipo == TipoConta.Premium ? 1000 : 0;
+        }
+
+        public override void Retirar(decimal valor)
+        {
+            if(valor > Saldo + Limite)
+            {
+                throw new SaldoInsuficienteException("Saldo insuficiente");
+            }
+            Saldo -= valor;
+        }
     }
 
     enum TipoConta

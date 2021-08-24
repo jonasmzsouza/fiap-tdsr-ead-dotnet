@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Fiap.Aula01.Exercicio.Models
 {
@@ -8,25 +7,36 @@ namespace Fiap.Aula01.Exercicio.Models
     {
         public int Agencia { get; set; }
         public int Numero { get; set; }
-        public decimal Saldo { get; set; }
+        public decimal Saldo { get; protected set; }
         public DateTime DataAbertura { get; set; }
-        private IList<Cliente> _clientes;
+        public IList<Cliente> Clientes { get; set; }
 
         public Conta(int agencia, int numero, IList<Cliente> clientes)
         {
             Agencia = agencia;
             Numero = numero;
-            _clientes = clientes;
+            Clientes = clientes;
         }
 
-        public virtual void Depositar(decimal valor)
+        public void Depositar(decimal valor)
         {
-            Saldo += valor;
+            if (valor < 0)
+            {
+                throw new ArgumentException("O valor deve ser maior do que zero");
+            }
         }
 
-        public virtual void Retirar(decimal valor)
+        public override string ToString()
         {
-            Saldo -= valor;
+            var aux = "";
+            foreach(var item in Clientes)
+            {
+                aux += item + "\n";
+            }
+            return $"{aux}\nAgência: {Agencia}, Número: {Numero}, Saldo: {Saldo}, Data de Abertura: {DataAbertura}";
         }
+
+        public abstract void Retirar(decimal valor);
+
     }
 }

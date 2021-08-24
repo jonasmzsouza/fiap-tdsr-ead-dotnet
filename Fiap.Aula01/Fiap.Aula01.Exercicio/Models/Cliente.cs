@@ -11,5 +11,10 @@
             Id = id;
             Nome = nome;
         }
+
+        public override string ToString()
+        {
+            return $"Id: {Id}, Cliente: {Nome}, Cpf: {Cpf}";
+        }
     }
 }
