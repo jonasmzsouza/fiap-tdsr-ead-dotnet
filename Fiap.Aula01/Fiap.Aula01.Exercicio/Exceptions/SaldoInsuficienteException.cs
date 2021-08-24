@@ -4,9 +4,10 @@ using System.Text;
 
 namespace Fiap.Aula01.Exercicio.Exceptions
 {
+    //exception tab tab
 
     [Serializable]
-    public class SaldoInsuficienteException: Exception
+    public class SaldoInsuficienteException : Exception
     {
         public SaldoInsuficienteException() { }
         public SaldoInsuficienteException(string message) : base(message) { }

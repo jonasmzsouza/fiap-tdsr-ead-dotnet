@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Fiap.Aula01.Exercicio.Models
 {
@@ -18,25 +19,25 @@ namespace Fiap.Aula01.Exercicio.Models
             Clientes = clientes;
         }
 
+        public override string ToString()
+        {
+            var aux = "";
+            //Percorre a lista de clientes para armzenar os dados na variável auxiliar (aux)
+            foreach (var item in Clientes)
+            {
+                aux += item + "\n";
+            }
+            return $"{aux}Agência: {Agencia}, Número: {Numero}, Saldo: {Saldo}\nData de Abertura: {DataAbertura}";
+        }
+
+        public abstract void Retirar(decimal valor);
         public void Depositar(decimal valor)
         {
             if (valor < 0)
             {
                 throw new ArgumentException("O valor deve ser maior do que zero");
             }
+            Saldo += valor;
         }
-
-        public override string ToString()
-        {
-            var aux = "";
-            foreach(var item in Clientes)
-            {
-                aux += item + "\n";
-            }
-            return $"{aux}\nAgência: {Agencia}, Número: {Numero}, Saldo: {Saldo}, Data de Abertura: {DataAbertura}";
-        }
-
-        public abstract void Retirar(decimal valor);
-
     }
 }

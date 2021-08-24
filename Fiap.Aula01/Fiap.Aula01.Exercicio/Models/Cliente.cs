@@ -1,6 +1,10 @@
-﻿namespace Fiap.Aula01.Exercicio.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Fiap.Aula01.Exercicio.Models
 {
-    public class Cliente
+    class Cliente
     {
         public long Id { get; set; }
         public string Nome { get; set; }
@@ -14,7 +18,8 @@
 
         public override string ToString()
         {
-            return $"Id: {Id}, Cliente: {Nome}, Cpf: {Cpf}";
+            return $"Id: {Id}, Nome: {Nome}, Cpf: {Cpf}";
         }
+
     }
 }

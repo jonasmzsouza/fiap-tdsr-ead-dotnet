@@ -15,7 +15,8 @@ namespace Fiap.Aula01.Exercicio.Models
             return base.ToString() + $" Limite: {Limite}, Tipo: {Tipo}";
         }
 
-        public ContaCorrente(int agencia, int numero, IList<Cliente> clientes, TipoConta tipo) : base (agencia, numero, clientes)
+        public ContaCorrente(int agencia, int numero, IList<Cliente> clientes,
+                TipoConta tipo) : base(agencia, numero, clientes)
         {
             Tipo = tipo;
             switch (Tipo)
@@ -30,13 +31,17 @@ namespace Fiap.Aula01.Exercicio.Models
                     Limite = 1000;
                     break;
             }
-            //Ternário
+            //Ternário (condição ? se verdadeiro : se falso)
             //Limite = Tipo == TipoConta.Especial ? 500 : Tipo == TipoConta.Premium ? 1000 : 0;
         }
 
+        /**
+         * Se a conta for comum e o saldo fica negativo depois do saque lance uma exceção e
+         * não permita a retirada. Caso a conta seja especial ou premium o saldo pode ficar 
+         * negativo até o limite*/
         public override void Retirar(decimal valor)
         {
-            if(valor > Saldo + Limite)
+            if (valor > Saldo + Limite)
             {
                 throw new SaldoInsuficienteException("Saldo insuficiente");
             }
