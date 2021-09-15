@@ -16,7 +16,7 @@ namespace Fiap.Aula02.Web.Exemplo01.Controllers
         // Aributo que armazena o di do veiculo
         private static int id;
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult Remover(int id)
         {
             //Remover o veículo da lista
