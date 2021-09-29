@@ -1,0 +1,82 @@
+﻿@model List<Filme>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<mensagem texto="@TempData["msg"]"></mensagem>
+
+<form class="form-inline mb-3">
+    <input type="text" placeholder="Digite o nome" name="nomeBusca" class="form-control mr-2" />
+    <select class="form-control mr-2" name="generoBusca" asp-items="@Html.GetEnumSelectList<Genero>()">
+        <option>Gênero</option>
+    </select>
+    <input type="submit" value="Pesquisar" class="btn btn-primary" />
+</form>
+<a asp-action="cadastrar">Cadastrar</a>
+
+@if (Model.Count == 0)
+{
+    <mensagem texto="Nenhum registro encontrado" class="alert alert-danger"></mensagem>
+}
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Ano</th>
+                <th>Data Lançamento</th>
+                <th>Gênero</th>
+                <th>Maior Idade</th>
+                <th>Sinopse</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.FilmeId</td>
+                    <td>@item.Nome</td>
+                    <td>@item.Ano</td>
+                    <td>@item.DataLancamento.ToShortDateString()</td>
+                    <td>@item.Genero</td>
+                    <td>@(item.MaiorIdade?"Sim":"Não")</td>
+                    <td>@item.Sinopse</td>
+                    <td>
+                        <a asp-action="editar" asp-route-id="@item.FilmeId" class="btn btn-sm btn-outline-secondary">Editar</a>
+                        <button onclick="idFilme.value = @item.FilmeId" type="button" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#exampleModal">
+                            Remover
+                        </button>
+                    </td>
+                </tr>
+            }
+        </thead>
+    </table>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Deseja realmente apagar o filme?
+            </div>
+            <div class="modal-footer">
+                <form asp-action="remover">
+                    <input type="hidden" name="id" id="idFilme" />
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                    <button type="submit" class="btn btn-danger">Sim</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
